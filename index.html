@@ -22,10 +22,13 @@
     <link href="//netdna.bootstrapcdn.com/bootswatch/3.1.1/slate/bootstrap.min.css" rel="stylesheet">
     <style>
       #stream {
-        padding: 25px;
+        padding: 25px 30px;
       }
       .glyphicon {
         font-size: 80%;
+      }
+      .chat {
+        text-align: center;
       }
     </style>
 
@@ -62,9 +65,9 @@
     <div class="container">
 
       <div class="row">
-        <div class="col-lg-8" id="stream">
+        <div class="col-lg-8 col-md-7" id="stream">
           <object type="application/x-shockwave-flash" 
-                  width="720" 
+                  width="100%" 
                   height="436"
                   id="live_embed_player_flash" 
                   data="http://www.twitch.tv/widgets/live_embed_player.swf?channel=datenshiZERO" 
@@ -81,7 +84,7 @@
                     value="hostname=www.twitch.tv&channel=datenshiZERO&auto_play=true" />
           </object>
         </div>
-        <div class="col-lg-4">
+        <div class="col-lg-4 col-md-5 chat">
           <iframe frameborder="0" 
                   scrolling="no" 
                   id="chat_embed" 
@@ -203,6 +206,7 @@
 
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-sparklines/2.1.2/jquery.sparkline.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.1.1/js/bootstrap.min.js"></script>
     
     <script>
       (function($){
@@ -220,6 +224,14 @@
          $("span.curve").sparkline("html", { type: "bar", barWidth: "10", barColor: '#ffaa56', height: "24"});
          $("span.distribution").sparkline("html", 
            { type: "pie", sliceColors: ["#968c55", "#414574", "#c6c4c4"], height: "22", borderWidth: 1, borderColor: "#333"});
+
+         var resizeVideo = function() {
+           $("#live_embed_player_flash").height( $("#live_embed_player_flash").width() * 9 / 16 + 32 );
+           $("#chat_embed").height( $("#live_embed_player_flash").height() + 50 );
+           if ($("#chat_embed").height() < 335) { $("#chat_embed").height(335); }
+         };
+         $(window).resize(resizeVideo);
+         setTimeout(resizeVideo, 3000);
        })($);
 
     </script>
